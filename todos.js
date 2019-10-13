@@ -2,12 +2,8 @@ var listElement = document.querySelector('#app ul');
 var inputElement = document.querySelector('#app input');
 var buttonElement = document.querySelector('#app button');
 
-var todos = [
-    'Fazer café',
-    'Estudar JS',
-    'Acessar comunidade'
-];
-
+//se ele nao conseguir retornar um valor aceitavel, joga um vetor vazio
+var todos = JSON.parse(localStorage.getItem('list_todos')) || [];
 function renderTodos(){
     listElement.innerHTML = '';
 
@@ -38,6 +34,7 @@ function addTodo(){
     todos.push(todoText);
     inputElement.value='';
     renderTodos();
+    saveToStorage();
 }
 
 buttonElement.onclick = addTodo;
@@ -46,4 +43,9 @@ function deleteTodo(pos){
     //vai na posição zero e remove 1 item se for 0 e 1
     todos.splice(pos, 1);
     renderTodos();
+    saveToStorage();
+}
+
+function saveToStorage(){
+    localStorage.setItem('list_todos', JSON.stringify(todos));
 }
